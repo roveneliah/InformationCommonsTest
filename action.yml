@@ -9,6 +9,8 @@ inputs:
 outputs:
   messages:
     description: "Message for modified info file."
+  testOp:
+    description: "yolo"
 runs:
   using: "node12"
   main: "dist/index.js"
