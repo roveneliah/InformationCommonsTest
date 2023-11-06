@@ -3,9 +3,6 @@ description: "Checks .info.md files against starter test kit for reviewers."
 inputs:
   prompt:
     description: "Manual override of prompt."
-  # github-token:
-  #   description: "Token for the repo. Can be passed in using {{ secrets.GITHUB_TOKEN }}."
-  #   required: true
 outputs:
   messages:
     description: "Message for modified info file."

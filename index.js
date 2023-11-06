@@ -8,6 +8,7 @@ const github = require("@actions/github");
 console.log("hello world");
 
 console.log(process.env.YO);
+core.setOutput("YO", process.env.YO);
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI,
