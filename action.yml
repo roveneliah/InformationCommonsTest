@@ -1,9 +1,14 @@
-name: 'Info File Checker'
-description: 'Checks .info.md files using a language model'
+name: "Information Commons Standard PR Checks"
+description: "Checks .info.md files against starter test kit for reviewers."
 inputs:
+  prompt:
+    description: "Manual override of prompt."
   github-token:
-    description: 'Token for the repo. Can be passed in using {{ secrets.GITHUB_TOKEN }}.'
+    description: "Token for the repo. Can be passed in using {{ secrets.GITHUB_TOKEN }}."
     required: true
+outputs:
+  messages:
+    description: "Message for modified info file."
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node12"
+  main: "dist/index.js"
