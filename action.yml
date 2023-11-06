@@ -1,0 +1,9 @@
+name: 'Info File Checker'
+description: 'Checks .info.md files using a language model'
+inputs:
+  github-token:
+    description: 'Token for the repo. Can be passed in using {{ secrets.GITHUB_TOKEN }}.'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
