@@ -58,7 +58,7 @@ async function processInfoMdFiles(dirPath, fn) {
     }
   });
 
-  core.setOutput("message", messages.join("\n"));
+  core.setOutput("messages", messages.join("\n"));
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2);
   console.log(`The event payload: ${payload}`);
