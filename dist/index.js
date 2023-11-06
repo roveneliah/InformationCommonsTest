@@ -45011,68 +45011,74 @@ const path = __nccwpck_require__(1017);
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI,
-});
+// const openaiApiKey = core.getInput("openai_api_key", { required: true });
 
-async function checkContentWithLanguageModel(content, prompt) {
-  try {
-    const completion = await openai.chat.completions.create({
-      messages: [
-        {
-          role: "system",
-          content: "You are responsible for vetting files given a prompt.",
-        },
-        { role: "system", content: `PROMPT: ${prompt}` },
-        { role: "user", content },
-      ],
-      model: "gpt-3.5-turbo",
-    });
-    console.log(completion.choices[0].message.content);
+// const openai = new OpenAI({
+//   apiKey: process.env.OPENAI,
+// });
 
-    return completion.choices[0].message.content;
-  } catch (error) {
-    core.setFailed(error.message);
-    return `Failed to check content: ${error.message}`;
-  }
-}
+// async function checkContentWithLanguageModel(content, prompt) {
+//   try {
+//     const completion = await openai.chat.completions.create({
+//       messages: [
+//         {
+//           role: "system",
+//           content: "You are responsible for vetting files given a prompt.",
+//         },
+//         { role: "system", content: `PROMPT: ${prompt}` },
+//         { role: "user", content },
+//       ],
+//       model: "gpt-3.5-turbo",
+//     });
+//     console.log(completion.choices[0].message.content);
 
-// Recursive function to read all files in a directory and its subdirectories
-async function processInfoMdFiles(dirPath, fn) {
-  // Read all items in the directory
+//     return completion.choices[0].message.content;
+//   } catch (error) {
+//     return `Failed to check content: ${error.message}`;
+//   }
+// }
 
-  const dirents = fs.readdirSync(dirPath, { withFileTypes: true });
+// // Recursive function to read all files in a directory and its subdirectories
+// async function processInfoMdFiles(dirPath, fn) {
+//   // Read all items in the directory
+//   core.setOutput("testOp", 22);
 
-  let messages = [];
-  dirents.forEach(async (dirent) => {
-    const fullPath = path.join(dirPath, dirent.name);
+//   const dirents = fs.readdirSync(dirPath, { withFileTypes: true });
 
-    if (dirent.isDirectory()) {
-      processInfoMdFiles(fullPath, fn);
-    } else if (dirent.isFile() && dirent.name.endsWith(".info.md")) {
-      // If the item is a file and ends with .info.md, read and process it
-      const content = fs.readFileSync(fullPath, "utf8");
-      console.log("Dipatching check on", dirent.name);
+//   let messages = [];
+//   for (const dirent of dirents) {
+//     const fullPath = path.join(dirPath, dirent.name);
 
-      const result = await fn(content);
-      const output = `File: ${fullPath}\n${result}`;
-      messages.push(output);
-    }
-  });
+//     if (dirent.isDirectory()) {
+//       await processInfoMdFiles(fullPath, fn);
+//     } else if (dirent.isFile() && dirent.name.endsWith(".info.md")) {
+//       // If the item is a file and ends with .info.md, read and process it
+//       const content = fs.readFileSync(fullPath, "utf8");
+//       console.log("Dipatching check on", dirent.name);
 
-  core.setOutput("message", messages.join("\n"));
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
-  console.log(`The event payload: ${payload}`);
-}
+//       const result = await fn(content);
+//       const output = `File: ${fullPath}\n${result}`;
+//       messages.push(output);
+//     }
+//   }
 
-const prompt =
-  core.getInput("propmt") ||
-  "The following file content is meant as journalistic fact, and should be as concise as possible, with no insinuations or inuendo.  It should also have at least two sources.  Respond with a list of failing conditions.";
+//   core.setOutput("messages", messages.join("\n"));
+//   // Get the JSON webhook payload for the event that triggered the workflow
+//   const payload = JSON.stringify(github.context.payload, undefined, 2);
+//   console.log(`The event payload: ${payload}`);
+// }
+// // core.getInput("prompt") ||
+// const prompt =
+//   "The following file content is meant as journalistic fact, and should be as concise as possible, with no insinuations or inuendo.  It should also have at least two sources.  Respond with a list of failing conditions.";
 
-processInfoMdFiles(".", async (content) =>
-  checkContentWithLanguageModel(content, prompt)
-);
+core.setOutput("testOp", 12);
+core.setOutput("messages", "yes, no, maybe");
+
+// (async () => {
+//   await processInfoMdFiles(".", async (content) =>
+//     checkContentWithLanguageModel(content, prompt)
+//   );
+// })();
 
 })();
 
