@@ -42,11 +42,11 @@ async function processInfoMdFiles(dirPath, fn) {
   const dirents = fs.readdirSync(dirPath, { withFileTypes: true });
 
   let messages = [];
-  dirents.forEach(async (dirent) => {
+  for (const dirent of dirents) {
     const fullPath = path.join(dirPath, dirent.name);
 
     if (dirent.isDirectory()) {
-      processInfoMdFiles(fullPath, fn);
+      await processInfoMdFiles(fullPath, fn);
     } else if (dirent.isFile() && dirent.name.endsWith(".info.md")) {
       // If the item is a file and ends with .info.md, read and process it
       const content = fs.readFileSync(fullPath, "utf8");
@@ -56,7 +56,7 @@ async function processInfoMdFiles(dirPath, fn) {
       const output = `File: ${fullPath}\n${result}`;
       messages.push(output);
     }
-  });
+  }
 
   core.setOutput("messages", messages.join("\n"));
   // Get the JSON webhook payload for the event that triggered the workflow
