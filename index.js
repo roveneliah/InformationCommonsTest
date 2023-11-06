@@ -38,6 +38,7 @@ async function checkContentWithLanguageModel(content, prompt) {
 // Recursive function to read all files in a directory and its subdirectories
 async function processInfoMdFiles(dirPath, fn) {
   // Read all items in the directory
+  core.setOutput("testOp", 22);
 
   const dirents = fs.readdirSync(dirPath, { withFileTypes: true });
 
@@ -63,9 +64,8 @@ async function processInfoMdFiles(dirPath, fn) {
   const payload = JSON.stringify(github.context.payload, undefined, 2);
   console.log(`The event payload: ${payload}`);
 }
-
+// core.getInput("prompt") ||
 const prompt =
-  core.getInput("propmt") ||
   "The following file content is meant as journalistic fact, and should be as concise as possible, with no insinuations or inuendo.  It should also have at least two sources.  Respond with a list of failing conditions.";
 
 processInfoMdFiles(".", async (content) =>
