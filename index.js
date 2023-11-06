@@ -30,7 +30,6 @@ async function checkContentWithLanguageModel(content, prompt) {
 
     return completion.choices[0].message.content;
   } catch (error) {
-    core.setFailed(error.message);
     return `Failed to check content: ${error.message}`;
   }
 }
