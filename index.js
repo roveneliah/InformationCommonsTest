@@ -5,13 +5,10 @@ const path = require("path");
 const core = require("@actions/core");
 const github = require("@actions/github");
 
-console.log("hello world");
-
-console.log(process.env.YO);
-core.setOutput("YO", process.env.YO);
+const openaiApiKey = core.getInput("openai_api_key", { required: true });
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI,
+  apiKey: openaiApiKey,
 });
 
 async function checkContentWithLanguageModel(content, prompt) {

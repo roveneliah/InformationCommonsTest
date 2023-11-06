@@ -1,6 +1,10 @@
 name: "Information Commons Standard PR Checks"
 description: "Checks .info.md files against starter test kit for reviewers."
 inputs:
+  inputs:
+    openai_api_key:
+      description: "OpenAI API Key"
+      required: true
   prompt:
     description: "Manual override of prompt."
 outputs:
