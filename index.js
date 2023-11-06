@@ -68,6 +68,9 @@ const prompt =
   "The following file content is meant as journalistic fact, and should be as concise as possible, with no insinuations or inuendo.  It should also have at least two sources.  Respond with a list of failing conditions.";
 
 core.setOutput("testOp", 12);
-processInfoMdFiles(".", async (content) =>
-  checkContentWithLanguageModel(content, prompt)
-);
+
+(async () => {
+  await processInfoMdFiles(".", async (content) =>
+    checkContentWithLanguageModel(content, prompt)
+  );
+})();
